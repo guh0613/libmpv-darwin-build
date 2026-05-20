@@ -48,6 +48,11 @@ let
     cd $src
     patch -p1 <${../../../patches/mpv-fix-missing-objc.patch}
     patch -p1 <${../../../patches/mpv-mix-with-others.patch}
+    substituteInPlace audio/decode/ad_spdif.c \
+      --replace "static int write_packet(void *p, uint8_t *buf, int buf_size)" \
+                "static int write_packet(void *p, const uint8_t *buf, int buf_size)"
+    substituteInPlace filters/f_lavfi.c \
+      --replace "AV_OPT_TYPE_CHANNEL_LAYOUT" "AV_OPT_TYPE_CHLAYOUT"
     if [ "${variant}" == "${variants.audio}" ]; then
       patch -p1 <${../../../patches/mpv-remove-libass.patch}
     fi
