@@ -39,6 +39,12 @@ let
         unzip ${libpngPatch} -d libpng-patch
         rsync -a libpng-patch/libpng-*/ $src/
 
+        # Modern macOS SDKs define TARGET_OS_MAC, but no longer ship the
+        # classic Mac <fp.h> header selected by libpng's legacy compiler branch.
+        substituteInPlace $src/pngpriv.h \
+          --replace "defined(THINK_C) || defined(__SC__) || defined(TARGET_OS_MAC)" \
+                    "defined(THINK_C) || defined(__SC__)"
+
         cp -r $src $out
       '';
 in

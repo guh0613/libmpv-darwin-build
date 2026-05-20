@@ -45,6 +45,7 @@ pkgs.stdenvNoCC.mkDerivation {
       --native-file ${nativeFile} \
       --cross-file ${crossFile} \
       --prefix=$out \
+      --buildtype=release \
       -Dglib=disabled \
       -Dgobject=disabled \
       -Dcairo=disabled \
