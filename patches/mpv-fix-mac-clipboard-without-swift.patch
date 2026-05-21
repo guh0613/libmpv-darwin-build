@@ -11,9 +11,9 @@ index fb10be5..3498a6a 100644
 +                     'osdep/mac/app_bridge.m')
      main_fn_source = files('osdep/main-fn-mac.c')
  endif
- 
+
 @@ -1582,6 +1581,7 @@ endif
- 
+
  swift_sources = []
  if features['cocoa'] and features['swift']
 +    sources += files('player/clipboard/clipboard-mac.m')
@@ -33,3 +33,25 @@ index 9a21ff6..f7d425e 100644
      &clipboard_backend_mac,
  #endif
  #if HAVE_WAYLAND && HAVE_WAYLAND_PROTOCOLS_1_39
+diff --git a/osdep/mac/app_bridge.m b/osdep/mac/app_bridge.m
+index 5b5c2a3..a7c9e3f 100644
+--- a/osdep/mac/app_bridge.m
++++ b/osdep/mac/app_bridge.m
+@@ -165,6 +165,17 @@ int cocoa_main(int argc, char *argv[])
+     return 0;
+ }
+ #endif
++
++#if HAVE_COCOA && !HAVE_SWIFT
++void cocoa_init_media_keys(void) { }
++void cocoa_uninit_media_keys(void) { }
++void cocoa_set_input_context(struct input_ctx *input_context) { }
++void cocoa_set_mpv_handle(struct mpv_handle *ctx) { }
++void cocoa_init_cocoa_cb(void) { }
++int cocoa_main(int argc, char *argv[]) {
++    return mpv_main(argc, argv);
++}
++#endif
+
+ const struct m_sub_options macos_conf = {
+     .opts = macos_opts,

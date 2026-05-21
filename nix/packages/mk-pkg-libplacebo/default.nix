@@ -15,6 +15,7 @@ let
   python = pkgs.python3.withPackages (pythonPkgs: [
     pythonPkgs.jinja2
     pythonPkgs.markupsafe
+    pythonPkgs.glad2
   ]);
 
   pname = import ../../utils/name/package.nix name;
@@ -69,8 +70,8 @@ pkgs.stdenvNoCC.mkDerivation {
       -Ddefault_library=shared \
       -Dvulkan=disabled \
       -Dvk-proc-addr=disabled \
-      -Dopengl=disabled \
-      -Dgl-proc-addr=disabled \
+      -Dopengl=enabled \
+      -Dgl-proc-addr=enabled \
       -Dd3d11=disabled \
       -Dglslang=disabled \
       -Dshaderc=disabled \
